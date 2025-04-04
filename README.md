@@ -27,6 +27,9 @@
 <br>
 
 # 📌 프로젝트 개요
+
+- **Architecture:** <br>
+  ![image](https://github.com/user-attachments/assets/2b9a262f-2921-44c3-96aa-fcd15b7bbe47)
   
 - **기술 스택:**  <br>
 ![Prometheus](https://img.shields.io/badge/Prometheus-000000?logo=prometheus&logoColor=orange&labelColor=white) ![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)![mysqld_exporter](https://img.shields.io/badge/mysqld_exporter-4479A1?logo=mysql&logoColor=white)![node_exporter](https://img.shields.io/badge/node_exporter-539E43?logo=gnu&logoColor=white)![Spring Boot](https://img.shields.io/badge/SpringBoot-6DB33F?logo=springboot&logoColor=white)![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?logo=virtualbox&logoColor=white)![VMware Workstation](https://img.shields.io/badge/VMware-607078?logo=vmware&logoColor=white)![STS](https://img.shields.io/badge/Spring_Tools_SUITE-6DB33F?logo=spring&logoColor=white)![Mobaxterm](https://img.shields.io/badge/Mobaxterm-333333?logo=windows&logoColor=white)![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)
