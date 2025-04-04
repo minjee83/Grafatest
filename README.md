@@ -1,4 +1,4 @@
-# Grafanauts (Grafana  + Astronauts 🧑‍🚀)
+# Prometehus & Grafana 기반의 모니터링 및 Node Exporter / MySQL Exporter / Spring 부하 테스트
 
 <br>
 
@@ -38,7 +38,6 @@
   - `Grafana`: 시각화 도구
 - **부하 테스트 도구:**
   - `stress`: CPU 기반 부하 생성
-  - 'stree ng' : 
   - `sysbench`: MySQL 트랜잭션 부하 테스트
 
 <br>
@@ -65,6 +64,13 @@
 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)   # CPU 사용률
 node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes                      # 메모리 사용량
 rate(node_network_receive_bytes_total[1m])                                       # 네트워크 수신량
+
+
+# Exporter 볼 수 있는 메트릭     mysqld_exporter 쿼리 수, 슬로우 쿼리, 연결 수 등 node_exporter CPU, 메모리, 디스크, 네트워크
+
+rate(mysql_global_status_queries[1m])                                            
+rate(mysql_global_status_threads_connected[1m])         
+rate(node_cpu_seconds_total{mode!="idle"}[1m])
 ```
 
 ---
@@ -94,25 +100,63 @@ stress --cpu 4 --timeout 60
 ```
 
 → CPU 사용률 급등을 Grafana로 실시간 관측
+![image](https://github.com/user-attachments/assets/f27ff6f0-773b-4804-9b3a-909eb8d73fd6)
 
 ---
 
-#### 📌 MySQL 부하 테스트: `sysbench`
+#### 📌 MySQL 부하 테스트: `Sysbench`
+
+Sysbench는 CLI 기반의 벤치마크 도구로, MySQL의 읽기/쓰기/트랜잭션 등 다양한 성능 테스트를 지원합니다. 가볍고 유연하며, custom script나 mysqlslap, JMeter와 함께 활용할 수 있습니다.
 
 ```bash
-sudo apt install sysbench
+# Sysbench 설치 (Ubuntu 기준)
+sudo apt update
+sudo apt install sysbench -y
 
 # 준비 단계
 sysbench /usr/share/sysbench/oltp_read_write.lua \
   --mysql-host=localhost --mysql-user=testuser \
   --mysql-password=testpass --mysql-db=testdb prepare
 
+# MySQL에 계정 만들기 (필요 시):
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=testuser
+DB_PASS=testpass
+DB_NAME=testdb
+
+# MySQL에 계정 만들기 (필요 시):
+CREATE DATABASE testdb;
+CREATE USER 'testuser'@'%' IDENTIFIED BY 'testpass';
+GRANT ALL PRIVILEGES ON testdb.* TO 'testuser'@'%';
+FLUSH PRIVILEGES;
+
 # 부하 실행
+# --threads=8 동시에 8개의 쓰레드로
+# --time=60 60초 동안 / --report-interval=10 10초마다 결과 출력
 sysbench /usr/share/sysbench/oltp_read_write.lua \
-  --mysql-host=localhost --mysql-user=testuser \
-  --mysql-password=testpass --mysql-db=testdb \
-  --threads=8 --time=60 --report-interval=10 run
+  --mysql-host=127.0.0.1 \
+  --mysql-port=3306 \
+  --mysql-user=testuser \
+  --mysql-password=testpass \
+  --mysql-db=testdb \
+  --threads=8 \
+  --time=60 \
+  --report-interval=10 \
+  run
+
+# 테스트 종료 후 정리
+sysbench /usr/share/sysbench/oltp_read_write.lua \
+  --mysql-host=127.0.0.1 \
+  --mysql-port=3306 \
+  --mysql-user=testuser \
+  --mysql-password=testpass \
+  --mysql-db=testdb \
+  cleanup
+
 ```
+
+![image](https://github.com/user-attachments/assets/fe5e993c-4241-4191-a032-2d9ce8530b09)
 
 ---
 
