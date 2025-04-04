@@ -1,4 +1,4 @@
-# 프로메테우스&그라파나 Export
+# Grafanauts (Grafana  + Astronauts 🧑‍🚀)
 
 <br>
 
@@ -27,8 +27,10 @@
 <br>
 
 # 📌 프로젝트 개요
+  
+- **기술 스택:**  <br>
+![Prometheus](https://img.shields.io/badge/Prometheus-000000?logo=prometheus&logoColor=orange&labelColor=white) ![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)![mysqld_exporter](https://img.shields.io/badge/mysqld_exporter-4479A1?logo=mysql&logoColor=white)![node_exporter](https://img.shields.io/badge/node_exporter-539E43?logo=gnu&logoColor=white)![Spring Boot](https://img.shields.io/badge/SpringBoot-6DB33F?logo=springboot&logoColor=white)![Java](https://img.shields.io/badge/Java-007396?logo=java&logoColor=white)![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?logo=virtualbox&logoColor=white)![VMware Workstation](https://img.shields.io/badge/VMware-607078?logo=vmware&logoColor=white)![STS](https://img.shields.io/badge/Spring_Tools_SUITE-6DB33F?logo=spring&logoColor=white)![Mobaxterm](https://img.shields.io/badge/Mobaxterm-333333?logo=windows&logoColor=white)![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack&logoColor=white)
 
-- **기술 스택:** Spring Boot, Prometheus, Grafana, Node Exporter, MySQL, Sysbench
 - **모니터링 구성요소:**
   - `node_exporter`: 시스템 리소스(CPU, Memory, Network 등)
   - `mysqld_exporter`: MySQL 상태 및 쿼리 메트릭
@@ -36,6 +38,7 @@
   - `Grafana`: 시각화 도구
 - **부하 테스트 도구:**
   - `stress`: CPU 기반 부하 생성
+  - 'stree ng' : 
   - `sysbench`: MySQL 트랜잭션 부하 테스트
 
 <br>
