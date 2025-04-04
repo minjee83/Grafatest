@@ -193,6 +193,45 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable mysqld_exporter
 ```
+### 5️⃣ SpringBoot Exporter 관측
+- Spring Boot 애플리케이션의 JVM 메모리 및 GC 상태를 Prometheus와 Grafana로 수집 및 시각화
+- stress-ng를 통한 부하 테스트를 통해 GC 동작을 관측함으로써 JVM 메트릭 기반의 성능 진단
+
+💻 실행 환경 및 조건
+- Spring Boot 앱 실행 (micrometer-prometheus 설정 포함)
+- Prometheus scrape 설정 /actuator/prometheus
+- Grafana에서 메트릭 대시보드 작성
+- 부하 도구: stress-ng --cpu 4 --timeout 60s
+
+![스크린샷 2025-04-04 154417](https://github.com/user-attachments/assets/2e65b51e-68ca-4569-88ad-4a38aef67fc6)
+
+
+✅ Eden Space 메모리 변화
+초록: jvm_memory_used_bytes{area="heap", id="G1 Eden Space"}
+
+점진적 증가 후, 특정 시점에 급감 → Minor GC 발생
+
+이후 메모리 다시 증가 → 객체 지속 생성 중
+
+✅ 전체 영역 변화 및 GC 반응
+부하로 인해 Eden, Survivor, Old Gen 모두 증가
+
+16:03경 Eden 공간 급감 → GC 발생
+
+메모리 회수 및 GC 이후 메모리 회복 확인
+
+✅ GC Pause 시간 측정
+jvm_gc_pause_seconds_sum
+
+초록: 실제 GC 시간 (Evacuation Pause)
+
+부하 직후 pause 시간 누적 증가 (정상)
+
+💡실무적 의의
+
+GC 작동 시점, 객체 생성 패턴, pause 시간 시각화 → 성능 이슈 사전 감지 가능
+운영 중 메모리 누수, GC 과다 발생 여부 실시간 파악
+Grafana 기반의 JVM 모니터링은 서비스 안정성을 위한 필수 구성요소로 작동
 
 ---
 
